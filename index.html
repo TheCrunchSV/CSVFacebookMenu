@@ -1204,7 +1204,7 @@ function calculateDeliveryDistance(destinationAddress){
 
             if(customerDistanceKm <= freeDeliveryKm){
                 showDistanceMessage(
-                    `✅ ${distanceText} away from the store${durationText ? `, around ${durationText} drive` : ""}. Free delivery eligible within ${freeDeliveryKm} KM.`,
+                    `✅ ${distanceText} away from the store${durationText ? `, around ${durationText} drive` : ""}. Free delivery eligible (as long as ₱400 minimum order) within ${freeDeliveryKm} KM.`,
                     "free"
                 );
             } else {
