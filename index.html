@@ -415,6 +415,31 @@ label{
     font-size:16px;
 }
 
+/* To check if the Subtotal is 400 or not */
+
+.delivery-status{
+    margin-top:10px;
+    padding:10px;
+    border-radius:12px;
+    font-weight:800;
+    text-align:center;
+    background:#fff7d7;
+    border:2px solid var(--yellow);
+    color:#111;
+}
+
+.delivery-status.free{
+    background:#e9ffe9;
+    border-color:#18a118;
+    color:#0b6b0b;
+}
+
+.delivery-status.not-free{
+    background:#fff0f0;
+    border-color:var(--red);
+    color:var(--red);
+}
+
 /* Google Maps autocomplete dropdown fix */
 .pac-container{
     z-index:999999 !important;
@@ -507,7 +532,7 @@ label{
         We at The Crunch - Signal Village Branch, will try as much as possible to let you know about it beforehand.
         <br><br> Thank you!</i>
     </p>
-    <p style="font-size: 5px; text-align:center;">Made by Lucifer - V5.35</p>
+    <p style="font-size: 5px; text-align:center;">Made by Lucifer - V6.21</p>
 </details>
 
 <!-- AD CAROUSEL PLACEHOLDER -->
@@ -569,6 +594,10 @@ label{
             <div class="total-line">
                 <span>Subtotal</span>
                 <span>₱<span id="total">0</span></span>
+            </div>
+
+            <div id="freeDeliveryStatus" class="delivery-status">
+    Add ₱400 minimum order to qualify for free delivery.
             </div>
 
             <div class="customer">
@@ -693,14 +722,14 @@ const menuSections = [
         items:[
             {
                 name:"Chicken Shots Bucket",
-                price:180,
+                price:185,
                 spicyAdd:15,
                 image:"https://drive.google.com/thumbnail?id=14xVYDIVqslJ6WVhwagG8iReIWko_rrkI&sz=w1000"
                 /* image:"https://placehold.co/500x350/ffc724/c50c0d?text=SHOTS+BUCKET" */
             },
             {
                 name:"Chicken Skin Bucket + Special Vinegar Sauce",
-                price:165,
+                price:170,
                 spicyAdd:15, 
                 hasSauce:false,
                 image:"https://drive.google.com/thumbnail?id=1JgYfulAnc9N2AcCSSTIFypjlbuLYHQTz&sz=w1000"
@@ -708,7 +737,7 @@ const menuSections = [
             },
             {
                 name:"Twister Fries Bucket",
-                price:150,
+                price:170,
                 spicyAdd:0,
                 hasSauce:false,
                 hasSpicy:false,
@@ -736,7 +765,7 @@ const menuSections = [
     },
 
     /* ======================
-    SEPARATE SAUCE MENU
+    EXTRAS MENU
     ====================== */
     {
         title:"Extras and Sauce",
@@ -759,11 +788,36 @@ const menuSections = [
                 image:"https://drive.google.com/thumbnail?id=1hqf7QcA9DQ6jaAKV8rUHeZzvWaEiVPRi&sz=w1000"
             },
             {
+                name:"Solo - Twister Fries (50 grams) ",
+                price:65,
+                spicyAdd:0,
+                hasSpicy:false,
+                hasSauce:false,
+                image:"https://drive.google.com/thumbnail?id=1UJtLi0tVykaKaonI9ju2TIsotBUdc4-f&sz=w1000"
+            },
+            {
                 name:"Extra Rice",
                 price:25,
                 spicyAdd:0,
                 hasSpicy:false,
                 hasSauce:false,
+                image:"https://drive.google.com/thumbnail?id=1Ath1ZCIrgCOVxU6Zm7MgZ8J-rrHVDbc6&sz=w1000"
+            },
+            {
+                name:"Drinks",
+                price:10,
+                priceLabel:"₱10 -₱25",
+                spicyAdd:0,
+                hasSpicy:false,
+                hasSauce:false,
+                variant:[
+                  /*  "Bottled Water - ₱10", */
+                    "Coke Mismo - ₱25",
+                    "Sprite Mismo - ₱25",
+                    "Royal Mismo - ₱25",
+                    "Mountain Dew Mismo - ₱25"
+                    ],
+                    varianPrices:[25,25,25,25],
                 image:"https://drive.google.com/thumbnail?id=1Ath1ZCIrgCOVxU6Zm7MgZ8J-rrHVDbc6&sz=w1000"
             }
         ]
@@ -778,14 +832,14 @@ const menuSections = [
         items:[
             {
                 name:"1 Piece Chicken or Shots + Skin and Rice",
-                price:150,
+                price:155,
                 spicyAdd:5,
                 variant:["1 Piece Chicken", "Chicken Shots"],
                 image:"https://drive.google.com/thumbnail?id=1Feqk81cvzJNbyV0O2KluM50hwI9EXFpJ&sz=w1000"
             },
             {
                 name:"1 Piece Chicken or Shots + Fries and Rice",
-                price:150,
+                price:155,
                 spicyAdd:5,
                 variant:["1 Piece Chicken", "Chicken Shots"],
                 image:"https://drive.google.com/thumbnail?id=1sx0O_tMNyLRBVb1BvxaBev5xzPid1AyF&sz=w1000"
@@ -814,8 +868,8 @@ const menuSections = [
                 price:300,
                 spicyAdd:30,
                 hasSauce:false,
-                variant:["No Rice - ₱300", "With 3 Rice - ₱320"],
-                variantPrices:[300,320],
+                variant:["No Rice - ₱300", "With 6 Rice - ₱350"],
+                variantPrices:[300,350],
                 image:"https://drive.google.com/thumbnail?id=1Ck_N6AazUK5mtxJw1vda3A_ZIu9BRHDR&sz=w1000"
             }
         ]
@@ -852,12 +906,18 @@ function loadMenu(){
 
                 <div class="card-body">
                     <h3>${item.name}</h3>
+                    
+                <div class="price">
+                    ${item.priceLabel ? item.priceLabel : '₱${item.price}'}
+                    ${item.spicyAdd ? ` | Spicy +₱${item.spicyAdd}` : ""}
+                </div>
+            `;
 
-                    <div class="price">
+                                /* PRICE DIV before 
+                                <div class="price">
                         ₱${item.price}
                         ${item.spicyAdd ? ` | Spicy +₱${item.spicyAdd}` : ""}
-                    </div>
-            `;
+                    </div>  */
 
             /* Variant dropdown for secret menu choices */
             if(item.variant){
@@ -1083,10 +1143,38 @@ function updateCart(){
         `;
     });
 
+    /* CART ITEMS ON V5.21
     cartItems.innerHTML = html;
     document.getElementById("total").innerText = total;
     document.getElementById("bottomTotal").innerText = total;
     document.getElementById("cartCount").innerText = cart.length;
+    */
+    cartItems.innerHTML = html;
+    document.getElementById("total").innerText = total;
+    document.getElementById("bottomTotal").innerText = total;
+    document.getElementById("cartCount").innerText = cart.length;
+
+/* FREE DELIVERY CHECK IF 400 */
+const freeDeliveryStatus = document.getElementById("freeDeliveryStatus");
+
+if(freeDeliveryStatus){
+    if(total >= 400){
+        freeDeliveryStatus.innerHTML = `
+            ✅ Your order is eligible for FREE DELIVERY.<br>
+            Minimum ₱400 order reached.
+        `;
+        freeDeliveryStatus.className = "delivery-status free";
+    } else {
+        const remaining = 400 - total;
+
+        freeDeliveryStatus.innerHTML = `
+            ❌ Not yet eligible for free delivery.<br>
+            Add ₱${remaining} more to reach ₱400.
+        `;
+        freeDeliveryStatus.className = "delivery-status not-free";
+    }
+}
+    
 }
 
 /* ======================================================
@@ -1204,12 +1292,12 @@ function calculateDeliveryDistance(destinationAddress){
 
             if(customerDistanceKm <= freeDeliveryKm){
                 showDistanceMessage(
-                    `✅ ${distanceText} away from the store${durationText ? `, around ${durationText} drive` : ""}. Free delivery eligible (as long as ₱400 minimum order) within ${freeDeliveryKm} KM.`,
+                    `✅ ${distanceText} away from the store${durationText ? `, around ${durationText} drive` : ""}. Free delivery eligible (as long as ₱400 MINIMUM ORDER) within ${freeDeliveryKm} KM.`,
                     "free"
                 );
             } else {
                 showDistanceMessage(
-                    `❌ ${distanceText} away from the store${durationText ? `, around ${durationText} drive` : ""}. Plus DELIVERY FEE (Less P50 on MI Express), since this is outside the free delivery area of ${freeDeliveryKm} KM.`,
+                    `❌ ${distanceText} away from the store${durationText ? `, around ${durationText} drive` : ""}. ADDITIONAL DELIVERY FEE, since this is outside the free delivery area of ${freeDeliveryKm} KM.`,
                     "not-free"
                 );
             }
@@ -1275,6 +1363,6 @@ updateCart();
 Required: Maps JavaScript, Places, and Distance Matrix.
 -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZFEdG0j0b3a9VCj-O7V3sqxBroeEqXz4&libraries=places&callback=initGoogleMaps"></script>
-<p style="font-size:3px; text-align:center;">made by Lucifer v5.19</p>
+<p style="font-size:3px; text-align:center;">made by Lucifer v6.21</p>
 </body>
 </html>
