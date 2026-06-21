@@ -678,6 +678,7 @@ const menuSections = [
                 name:"1 Piece Boneless Fried Chicken with Rice",
                 price:90,
                 spicyAdd:5,
+                hasSauce:true,
                 image:"https://drive.google.com/thumbnail?id=12Ig4BwhcNo0gODNeQOtYzbgJZUlckZFV&sz=w1000"
                 /* image:"https://placehold.co/500x350/ffc724/c50c0d?text=1PC+CHICKEN+RICE" */
             },
@@ -685,6 +686,7 @@ const menuSections = [
                 name:"2 Pieces Boneless Fried Chicken with Rice",
                 price:155,
                 spicyAdd:10,
+                hasSauce:true,
                 image:"https://drive.google.com/thumbnail?id=1cPgAWD5zzkla86_9qFlCZk1f_QIoCwNS&sz=w1000"
                 /* image:"https://placehold.co/500x350/c50c0d/ffffff?text=2PC+CHICKEN+RICE" */
             },
@@ -692,6 +694,7 @@ const menuSections = [
                 name:"3 Pieces Boneless Fried Chicken with Rice",
                 price:200,
                 spicyAdd:15,
+                hasSauce:true,
                 image:"https://drive.google.com/thumbnail?id=1wB5Oe4IkiAKjPASM5cvAsajUncRVpnd3&sz=w1000"
                 /* image:"https://placehold.co/500x350/111111/ffc724?text=3PC+CHICKEN+RICE" */
             },
@@ -699,6 +702,7 @@ const menuSections = [
                 name:"Chicken Shots with Rice",
                 price:90,
                 spicyAdd:5,
+                hasSauce:true,
                 image:"https://drive.google.com/thumbnail?id=1mbdM1jFuKC1quyJhaDSPTOwUaitns5e-&sz=w1000"
                 /* image:"https://placehold.co/500x350/ffc724/111111?text=SHOTS+WITH+RICE" */
             },
@@ -706,7 +710,6 @@ const menuSections = [
                 name:"Chicken Skin with Rice + Special Vinegar Sauce",
                 price:85,
                 spicyAdd:5,
-                hasSauce:false,
                 image:"https://drive.google.com/thumbnail?id=1nkOOtYLvDE7QEocWWn1gX9qX0U_BT-j0&sz=w1000"
                 /* image:"https://placehold.co/500x350/c50c0d/ffc724?text=SKIN+WITH+RICE" */
             }
@@ -724,6 +727,7 @@ const menuSections = [
                 name:"Chicken Shots Bucket",
                 price:185,
                 spicyAdd:15,
+                hasSauce:true,
                 image:"https://drive.google.com/thumbnail?id=14xVYDIVqslJ6WVhwagG8iReIWko_rrkI&sz=w1000"
                 /* image:"https://placehold.co/500x350/ffc724/c50c0d?text=SHOTS+BUCKET" */
             },
@@ -731,22 +735,19 @@ const menuSections = [
                 name:"Chicken Skin Bucket + Special Vinegar Sauce",
                 price:170,
                 spicyAdd:15, 
-                hasSauce:false,
                 image:"https://drive.google.com/thumbnail?id=1JgYfulAnc9N2AcCSSTIFypjlbuLYHQTz&sz=w1000"
                 /* image:"https://placehold.co/500x350/c50c0d/ffffff?text=SKIN+BUCKET" */
             },
             {
                 name:"Twister Fries Bucket",
                 price:170,
-                spicyAdd:0,
-                hasSauce:false,
-                hasSpicy:false,
                 image:"https://drive.google.com/thumbnail?id=1UJtLi0tVykaKaonI9ju2TIsotBUdc4-f&sz=w1000"
                 /* image:"https://placehold.co/500x350/111111/ffc724?text=TWISTER+FRIES" */
             },
             {
                 name:"Half Chicken / 6 Pieces",
                 price:400,
+                hasSauce:true,
                 spicyHalfAdd:15,
                 spicyAllAdd:30,
                 image:"https://drive.google.com/thumbnail?id=1shNuMuuatMiePLw8BvGAPb1wC7qb7Ywg&sz=w1000"
@@ -774,42 +775,29 @@ const menuSections = [
             {
                 name:"Extra Sauce - Small",
                 price:30,
-                spicyAdd:0,
-                hasSpicy:false,
                 isExtraSauce:true,
                 image:"https://drive.google.com/thumbnail?id=1hqf7QcA9DQ6jaAKV8rUHeZzvWaEiVPRi&sz=w1000"
             },
             {
                 name:"Extra Sauce - Big",
                 price:40,
-                spicyAdd:0,
-                hasSpicy:false,
                 isExtraSauce:true,
                 image:"https://drive.google.com/thumbnail?id=1hqf7QcA9DQ6jaAKV8rUHeZzvWaEiVPRi&sz=w1000"
             },
             {
                 name:"Solo - Twister Fries (50 grams) ",
                 price:65,
-                spicyAdd:0,
-                hasSpicy:false,
-                hasSauce:false,
                 image:"https://drive.google.com/thumbnail?id=1UJtLi0tVykaKaonI9ju2TIsotBUdc4-f&sz=w1000"
             },
             {
                 name:"Extra Rice",
                 price:25,
-                spicyAdd:0,
-                hasSpicy:false,
-                hasSauce:false,
                 image:"https://drive.google.com/thumbnail?id=1Ath1ZCIrgCOVxU6Zm7MgZ8J-rrHVDbc6&sz=w1000"
             },
             {
                 name:"Bottled Mismo Drinks",
                 price:10,
                 priceLabel:"₱25",
-                spicyAdd:0,
-                hasSpicy:false,
-                hasSauce:false,
                 variant:[
                   /*  "Bottled Water - ₱10", */
                     "Coke Mismo - ₱25",
@@ -939,9 +927,11 @@ function loadMenu(){
                     `).join("")}
                 </select>
                 `;
-            } */
+            } 
             
-        if(item.hasSauce !== false && !item.isExtraSauce){
+        if(item.hasSauce !== false && !item.isExtraSauce){ */
+
+        if((item.hasSauce === true || item.sauceCount === 2) && !item.isExtraSauce){
 
     if(item.sauceCount === 2){
         html += `
@@ -988,10 +978,12 @@ function loadMenu(){
                     Add spicy
                 </label>
                 `;
-            } */
+            }
             
-    if(item.hasSpicy !== false){
+    if(item.hasSpicy !== false){ */
 
+    if(item.spicyAdd > 0 || item.spicyHalfAdd > 0 || item.spicyAllAdd > 0){
+        
     if(item.spicyHalfAdd || item.spicyAllAdd){
         html += `
         <select id="spicy_${id}">
@@ -1083,8 +1075,12 @@ if(item.sauceCount === 2){
     sauce = `${sauce1} + ${sauce2}`;
 } else {
     const sauceInput = document.getElementById(`sauce_${id}`);
-    sauce = sauceInput ? sauceInput.value : "None if Twister Fries, else Special Vinegar";
+    sauce = sauceInput ? sauceInput.value : "No sauce";
 }
+
+    /* Sauce Logic during v5.21     
+    sauce = sauceInput ? sauceInput.value : "None if Twister Fries, else Special Vinegar"; */
+
 
     cart.push({
         name:item.name,
@@ -1123,6 +1119,15 @@ function updateCart(){
         `;
     }
 
+    /* item.name before at v5.21
+
+${item.variant ? `Option: ${item.variant}<br>` : ""}
+Sauce: ${item.sauce}<br>
+Spicy: ${item.spicy}<br>
+<b>₱${item.price}</b>
+
+*/
+
     cart.forEach((item,index)=>{
         total += item.price;
 
@@ -1131,8 +1136,8 @@ function updateCart(){
             <div>
                 <b>${item.name}</b><br>
                 ${item.variant ? `Option: ${item.variant}<br>` : ""}
-                Sauce: ${item.sauce}<br>
-                Spicy: ${item.spicy}<br>
+                ${item.sauce && item.sauce !== "No sauce" ? `Sauce: ${item.sauce}<br>` : ""}
+                ${item.spicy && item.spicy !== "No spicy" ? `Spicy: ${item.spicy}<br>` : ""}
                 <b>₱${item.price}</b>
             </div>
 
