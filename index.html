@@ -1336,7 +1336,7 @@ function showDistanceMessage(message, type){
 /* ======================================================
 CHECKOUT SCREENSHOT
 Only screenshots the receipt, not the full website.
-====================================================== */
+====================================================== 
 
 function checkout(){
     if(cart.length === 0){
@@ -1357,6 +1357,77 @@ function checkout(){
         link.click();
 
         window.open(facebookPageLink,"_blank");
+    });
+} 
+
+DURING V5.21*/
+
+function checkout(){
+    if(cart.length === 0){
+        alert("Your cart is empty.");
+        return;
+    }
+
+const addressValue = document.getElementById("customerAddress").value.trim();
+
+if(addressValue !== "" && customerDistanceKm === null){
+    const proceed = confirm(
+        "The distance checker has not finished or could not load.\n\n" +
+        "You may still continue, but FREE DELIVERY will be subject to store confirmation.\n\n" +
+        "Continue checkout?"
+    );
+
+    if(!proceed){
+        return;
+    }
+
+    const deliveryDistanceStatus = document.getElementById("deliveryDistanceStatus");
+
+    if(deliveryDistanceStatus){
+        deliveryDistanceStatus.innerHTML = `
+            ⚠️ Distance not verified.<br>
+            Free delivery is subject to store confirmation.
+        `;
+        deliveryDistanceStatus.className = "delivery-status not-free";
+    }
+}
+
+    const checkoutBtn = document.querySelector(".checkout-btn");
+    checkoutBtn.disabled = true;
+    checkoutBtn.innerHTML = `
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Preparing receipt...
+    `;
+
+    html2canvas(document.getElementById("receipt")).then(canvas=>{
+        const link = document.createElement("a");
+
+        const now = new Date();
+        const timestamp = now.getFullYear() + "-" +
+            String(now.getMonth() + 1).padStart(2, "0") + "-" +
+            String(now.getDate()).padStart(2, "0") + "_" +
+            String(now.getHours()).padStart(2, "0") + "-" +
+            String(now.getMinutes()).padStart(2, "0") + "-" +
+            String(now.getSeconds()).padStart(2, "0");
+
+        link.download = `the-crunch-order-${timestamp}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+
+        checkoutBtn.innerHTML = `
+            <i class="fa-solid fa-clock"></i>
+            Redirecting to Facebook in 5 seconds...
+        `;
+
+        setTimeout(()=>{
+            window.open(facebookPageLink,"_blank");
+
+            checkoutBtn.disabled = false;
+            checkoutBtn.innerHTML = `
+                <i class="fa-solid fa-download"></i>
+                Checkout & Download Receipt
+            `;
+        }, 5000);
     });
 }
 
