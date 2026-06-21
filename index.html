@@ -804,9 +804,9 @@ const menuSections = [
                 image:"https://drive.google.com/thumbnail?id=1Ath1ZCIrgCOVxU6Zm7MgZ8J-rrHVDbc6&sz=w1000"
             },
             {
-                name:"Drinks",
+                name:"Bottled Mismo Drinks",
                 price:10,
-                priceLabel:"₱10 -₱25",
+                priceLabel:"₱25",
                 spicyAdd:0,
                 hasSpicy:false,
                 hasSauce:false,
@@ -818,7 +818,7 @@ const menuSections = [
                     "Mountain Dew Mismo - ₱25"
                     ],
                     varianPrices:[25,25,25,25],
-                image:"https://drive.google.com/thumbnail?id=1Ath1ZCIrgCOVxU6Zm7MgZ8J-rrHVDbc6&sz=w1000"
+                image:"https://drive.google.com/thumbnail?id=1g_f6t2YLyMV_pfpB2Fu9pKvQ4WAaWhU3&sz=w1000"
             }
         ]
     },
@@ -908,8 +908,8 @@ function loadMenu(){
                     <h3>${item.name}</h3>
                     
                 <div class="price">
-                    ${item.priceLabel ? item.priceLabel : '₱${item.price}'}
-                    ${item.spicyAdd ? ` | Spicy +₱${item.spicyAdd}` : ""}
+                    ${item.priceLabel || "₱" + item.price}
+                    ${item.spicyAdd ? " | Spicy +₱" + item.spicyAdd : ""}
                 </div>
             `;
 
